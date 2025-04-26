@@ -124,6 +124,9 @@ STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR / "static")]
 
+# Directory to collect static files during deployment (e.g., 'staticfiles' directory)
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = 'media/'
