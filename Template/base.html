@@ -44,7 +44,20 @@
     <div class="bg-box">
       <img src="{% static 'images/coffeebg.jpg' %}" alt="">
     </div>
+    <div class="clock-container" id="clock-container">
+      <i class="fa fa-clock clock-icon"></i>
+      <span id="digital-clock">--:--:-- --</span>
+    </div>
+    <!-- Audio player, autoplay with hidden controls -->
+    <audio id="bg-music" src="{% static 'videos/coffeebgm.mp3' %}" autoplay loop></audio>
 
+    <!-- Volume control icon -->
+    <div id="audio-control" class="audio-control">
+      <i id="volume-icon" class="fa fa-volume-up"></i>
+      <div class="volume-slider-wrapper">
+        <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5">
+      </div>
+    </div>
 
     <!-- header section starts -->
     <header class="header_section">
@@ -77,20 +90,7 @@
 
             <!-- USER OPTIONS -->
             <div class="user_option">
-              <div class="clock-container" id="clock-container">
-                <i class="fa fa-clock clock-icon"></i>
-                <span id="digital-clock">--:--:-- --</span>
-              </div>
-              <!-- Audio player, autoplay with hidden controls -->
-              <audio id="bg-music" src="{% static 'videos/coffeebgm.mp3' %}" autoplay loop></audio>
 
-              <!-- Volume control icon -->
-              <div id="audio-control" class="audio-control">
-                <i id="volume-icon" class="fa fa-volume-up"></i>
-                <div class="volume-slider-wrapper">
-                  <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5">
-                </div>
-              </div>
               </a>
             </div>
           </div>
@@ -189,6 +189,7 @@
   <!-- styles section -->
   <style>
     .clock-container {
+      transition: opacity 0.4s ease;
       position: fixed;
       top: 20px;
       right: 60px;
@@ -201,7 +202,7 @@
       display: flex;
       align-items: center;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-      z-index: 9999;
+      z-index: 99999;
     }
 
     .clock-icon {
@@ -209,8 +210,8 @@
       color: #f1c40f;
     }
 
-     /* Music control styling */
-     .audio-control {
+    /* Music control styling */
+    .audio-control {
       position: fixed;
       top: 25px;
       right: 15px;
@@ -224,110 +225,124 @@
       justify-content: center;
       transition: all 0.3s ease;
       overflow: visible;
+
     }
-    
+
     .audio-control.show-slider {
-      height: 140px; /* HEIGHT TO FIT SLIDER */
+      height: 140px;
+      /* HEIGHT TO FIT SLIDER */
       border-radius: 12px;
       flex-direction: column;
     }
-    
+
     .audio-control i {
       color: white;
       font-size: 15px;
       cursor: pointer;
     }
-    
+
     .volume-slider-wrapper {
       display: none;
       position: absolute;
-      top: 60px; /* PUTS IT BELOW THE ICON */
+      top: 60px;
+      /* PUTS IT BELOW THE ICON */
       right: 50%;
       transform: translateX(50%) rotate(-90deg);
       transform-origin: center;
     }
-    
+
     .audio-control.show-slider .volume-slider-wrapper {
       display: block;
     }
+
     .audio-control.show-slider i {
       opacity: 0;
       pointer-events: none;
     }
+
     #volume-slider {
       width: 100px;
     }
-    
   </style>
 
   <script>
-    // CLOCK FUNCTION
-    function updateClock() {
-      const now = new Date();
-      let hours = now.getHours();
-      const minutes = now.getMinutes().toString().padStart(2, "0");
-      const seconds = now.getSeconds().toString().padStart(2, "0");
-      const ampm = hours >= 12 ? "PM" : "AM";
-  
-      hours = hours % 12 || 12;
-      hours = hours.toString().padStart(2, "0");
-  
-      document.getElementById("digital-clock").textContent = `${hours}:${minutes}:${seconds} ${ampm}`;
-      setTimeout(updateClock, 1000);
-    }
-  
-    // START CLOCK WHEN PAGE LOADS
-    window.addEventListener("load", () => {
-      updateClock();
-    });
-  
-    // MUSIC LOGIC
-    const audio = document.getElementById('bg-music');
-    const volumeSlider = document.getElementById('volume-slider');
-    const audioControl = document.getElementById('audio-control');
-    const volumeIcon = document.getElementById('volume-icon');
-  
-    audio.volume = volumeSlider.value;
-  
-    // VOLUME SLIDER FUNCTION
-    volumeSlider.addEventListener('input', () => {
+    window.addEventListener('DOMContentLoaded', function () {
+      // CLOCK FUNCTION
+      function updateClock() {
+        const now = new Date();
+        let hours = now.getHours();
+        const minutes = now.getMinutes().toString().padStart(2, "0");
+        const seconds = now.getSeconds().toString().padStart(2, "0");
+        const ampm = hours >= 12 ? "PM" : "AM";
+
+        hours = hours % 12 || 12;
+        hours = hours.toString().padStart(2, "0");
+
+        document.getElementById("digital-clock").textContent = `${hours}:${minutes}:${seconds} ${ampm}`;
+        setTimeout(updateClock, 1000);
+      }
+
+      updateClock(); // start the clock!
+
+      const audio = document.getElementById('bg-music');
+      const volumeSlider = document.getElementById('volume-slider');
+      const audioControl = document.getElementById('audio-control');
+      const volumeIcon = document.getElementById('volume-icon');
+
       audio.volume = volumeSlider.value;
+
+      volumeSlider.addEventListener('input', () => {
+        audio.volume = volumeSlider.value;
+      });
+
+      volumeIcon.addEventListener('click', (e) => {
+        e.stopPropagation();
+        audioControl.classList.toggle('show-slider');
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!audioControl.contains(e.target)) {
+          audioControl.classList.remove('show-slider');
+        }
+      });
+
+      document.addEventListener('click', () => {
+        if (audio.paused) {
+          audio.play().catch(err => {
+            console.warn("Autoplay blocked:", err);
+          });
+        }
+      }, { once: true });
+
+      const savedTime = localStorage.getItem('musicTime');
+      if (savedTime) {
+        audio.currentTime = parseFloat(savedTime);
+      }
+
+      window.addEventListener('beforeunload', () => {
+        localStorage.setItem('musicTime', audio.currentTime);
+      });
     });
-  
-    // TOGGLE SLIDER VISIBILITY
-    volumeIcon.addEventListener('click', (e) => {
-      e.stopPropagation();
-      audioControl.classList.toggle('show-slider');
-    });
-  
-    // HIDE SLIDER IF CLICKED OUTSIDE
-    document.addEventListener('click', (e) => {
-      if (!audioControl.contains(e.target)) {
-        audioControl.classList.remove('show-slider');
+
+    // STICKY SHOW-HIDE ON SCROLL
+    const clockContainer = document.getElementById('clock-container');
+    const audioControl = document.getElementById('audio-control');
+
+    window.addEventListener('scroll', function () {
+      if (window.scrollY === 0) {
+        // At the top of the page
+        clockContainer.style.opacity = "1";
+        audioControl.style.opacity = "1";
+        clockContainer.style.pointerEvents = "auto";
+        audioControl.style.pointerEvents = "auto";
+      } else {
+        // Not at the top
+        clockContainer.style.opacity = "0";
+        audioControl.style.opacity = "0";
+        clockContainer.style.pointerEvents = "none";
+        audioControl.style.pointerEvents = "none";
       }
     });
-  
-    // AUTOPLAY ON FIRST USER INTERACTION
-    document.addEventListener('click', () => {
-      if (audio.paused) {
-        audio.play().catch(err => {
-          console.warn("Autoplay blocked:", err);
-        });
-      }
-    }, { once: true });
-
-    // Save audio time before unload
-window.addEventListener('beforeunload', () => {
-  localStorage.setItem('musicTime', audio.currentTime);
-});
-
-// Restore audio time after load
-window.addEventListener('DOMContentLoaded', () => {
-  const savedTime = localStorage.getItem('musicTime');
-  if (savedTime) {
-    audio.currentTime = parseFloat(savedTime);
-  }
-});
   </script>
 
 
