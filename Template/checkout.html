@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block class %}class="sub_page"{% endblock class %}
+{% block menu_status %}active{% endblock menu_status %}
+{% load static %}
+
+{% block main %}
+
+<!-- checkout section -->
+<section class="cart_section layout_padding">
+  <div class="container">
+    <div class="heading_container heading_center">
+      <h2>Checkout</h2>
+    </div>
+
+    {% if cart_items %}
+    <form method="POST" action="{% url 'process_order' %}">
+      {% csrf_token %}
+      <div class="row">
+        <!-- Left: Cart Summary -->
+        <div class="col-md-7">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Qty</th>
+                  <th>Price</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in cart_items %}
+                <tr>
+                  <td>{{ item.item.Item_name }}</td>
+                  <td>{{ item.quantity }}</td>
+                  <td>${{ item.item.Price }}</td>
+                  <td>${{ item.total_price }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="3" class="text-right"><strong>Subtotal:</strong></td>
+                  <td><strong>${{ cart_total }}</strong></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+
+        <!-- Right: Order Details -->
+        <div class="col-md-5">
+          <div class="checkout-form bg-light p-4 rounded">
+            <h4>Delivery Information</h4>
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <input type="text" class="form-control" name="name" required>
+            </div>
+            <div class="form-group mt-3">
+              <label for="address">Address</label>
+              <textarea class="form-control" name="address" rows="3" required></textarea>
+            </div>
+            <div class="form-group mt-3">
+              <label for="payment_method">Payment Method</label>
+              <select class="form-control" name="payment_method" required>
+                <option value="" disabled selected>Select payment method</option>
+                <option value="Cash on Delivery">Cash on Delivery</option>
+                <option value="GCash">GCash</option>
+              </select>
+            </div>
+
+            <!-- Hidden item names & total -->
+            <input type="hidden" name="items" value="{% for item in cart_items %}{{ item.item.Item_name }} (x{{ item.quantity }}){% if not forloop.last %}, {% endif %}{% endfor %}">
+            <input type="hidden" name="cart_total" value="{{ cart_total|default_if_none:'0.00' }}">
+
+
+
+
+
+            <div class="mt-4 text-center">
+              <button type="submit" class="btn btn-success w-100">Place Order</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    {% else %}
+    <div class="empty-cart text-center">
+      <div>Your cart is empty.</div>
+      <a href="{% url 'Menu' %}" class="btn btn-primary mt-3">Browse Menu</a>
+    </div>
+    {% endif %}
+  </div>
+</section>
+<!-- end checkout section -->
+
+{% endblock main %}

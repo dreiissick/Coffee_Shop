@@ -1,0 +1,126 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <style>
+        .confirmation_section {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 9999;
+            background-color: #f8f8f8;
+            background-image: url("{% static 'images/coffeebg.jpg' %}");
+            background-size: cover;
+            background-position: center center;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 30px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .heading_container h2 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .confirmation_details h4 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .order_summary ul {
+            list-style-type: none;
+            padding: 0;
+            font-size: 1.1rem;
+            margin-top: 20px;
+        }
+
+        .order_summary li {
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background-color: #e67e22;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: #d35400;
+        }
+
+        .print-btn {
+            background-color: #3498db;
+            margin-top: 20px;
+        }
+
+        .print-btn:hover {
+            background-color: #2980b9;
+        }
+
+        @media (max-width: 768px) {
+            .confirmation_section {
+                padding: 10px;
+            }
+            .container {
+                padding: 20px;
+            }
+            .heading_container h2 {
+                font-size: 1.5rem;
+            }
+            .confirmation_details h4 {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="confirmation_section layout_padding">
+        <div class="container">
+            <div class="heading_container heading_center">
+                <h2>Order Confirmation</h2>
+            </div>
+            <div class="confirmation_details text-center">
+                <h4>Your order has been successfully placed!</h4>
+                <p>Thank you for your purchase, we will process your order shortly.</p>
+                <div class="order_summary">
+                    <h5>Order Summary:</h5>
+                    <ul>
+                        <li><strong>Name:</strong> {{ delivery.name }}</li>
+                        <li><strong>Address:</strong> {{ delivery.address }}</li>
+                        <li><strong>Payment Method:</strong> {{ delivery.payment_method }}</li>
+                        <li><strong>Items:</strong> {{ delivery.items }}</li>
+                        <li><strong>Total:</strong> ${{ delivery.total }}</li>
+                    </ul>
+                </div>
+                <a href="{% url 'Menu' %}" class="btn btn-primary">Continue Shopping</a>
+                <!-- Download Receipt Button -->
+                <a href="{% url 'download_receipt' delivery_id=delivery.id %}" class="btn print-btn">Download Receipt</a>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

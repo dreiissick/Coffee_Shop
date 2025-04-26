@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block class %}class="sub_page"{% endblock class %}
+{% block menu_status %}active{% endblock menu_status %}
+{% load static %}
+
+{% block main %}
+
+<!-- cart section -->
+<section class="cart_section layout_padding">
+  <div class="container">
+    <div class="heading_container heading_center">
+      <h2>
+        Your Cart
+      </h2>
+    </div>
+
+    <div class="cart_content">
+      {% if cart_items %}
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Image</th>
+              <th>Description</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Total</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in cart_items %}
+            <tr>
+              <td>{{ item.item.Item_name }}</td>
+              <td>
+                <div class="cart-img-box">
+                  <img src="/media/{{ item.item.Image }}" alt="{{ item.item.Item_name }}" style="max-width: 100px;">
+                </div>
+              </td>
+              <td>{{ item.item.description }}</td>
+              <td>${{ item.item.Price }}</td>
+              <td>
+                <div class="quantity-controls">
+                  <a href="{% url 'decrease_quantity' item.item.id %}" class="btn btn-sm btn-outline-secondary">-</a>
+                  <span class="mx-2">{{ item.quantity }}</span>
+                  <a href="{% url 'increase_quantity' item.item.id %}" class="btn btn-sm btn-outline-secondary">+</a>
+                </div>
+              </td>
+              <td>${{ item.total_price }}</td>
+              <td>
+                <a href="{% url 'remove_from_cart' item.item.id %}" class="btn btn-outline-danger btn-sm">
+                  Remove
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="5" class="text-right"><strong>Subtotal:</strong></td>
+              <td>${{ cart_total }}</td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      
+      <div class="cart-actions mt-4 text-center">
+        <a href="{% url 'Menu' %}" class="btn btn-secondary">Continue Shopping</a>
+        <a href="{% url 'checkout' %}" class="btn btn-primary">Proceed to Checkout</a>
+        <a href="{% url 'clear_cart' %}" class="btn btn-danger">Clear Cart</a>
+      </div>
+      {% else %}
+      <div class="empty-cart text-center">
+        <div>Your cart is empty.</div>
+        <a href="{% url 'Menu' %}" class="btn btn-primary mt-3">Browse Menu</a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+<!-- end cart section -->
+
+{% endblock main %}

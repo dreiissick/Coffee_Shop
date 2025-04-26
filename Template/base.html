@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <link rel="shortcut icon" href="{% static 'images/favicon1.png' %}" type="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+  <title> Drei </title>
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+
+  <!--owl slider stylesheet -->
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+  <!-- nice select  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css"
+    integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ=="
+    crossorigin="anonymous" />
+  <!-- font awesome style -->
+  <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" />
+
+  <!-- Custom styles for this template -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+
+</head>
+
+<body {% block class %}{% endblock class %}>
+
+  <div class="hero_area">
+    <div class="bg-box">
+      <img src="{% static 'images/coffeebg.jpg' %}" alt="">
+    </div>
+
+
+    <!-- header section starts -->
+    <header class="header_section">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg custom_nav-container">
+          <a class="navbar-brand" href="{% url 'Home' %}">
+            <span>Cozy Brew</span>
+          </a>
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class=""> </span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mx-auto">
+              <li class="nav-item {% block home_status %}{% endblock home_status %}">
+                <a class="nav-link" href="{% url 'Home' %}">Home</a>
+              </li>
+              <li class="nav-item {% block menu_status %}{% endblock menu_status %}">
+                <a class="nav-link" href="{% url 'Menu' %}">Menu</a>
+              </li>
+              <li class="nav-item {% block feedback_status %}{% endblock feedback_status %}">
+                <a class="nav-link" href="{% url 'Cart' %}">Cart</a>
+              </li>
+              <li class="nav-item {% block about_status %}{% endblock about_status %}">
+                <a class="nav-link" href="{% url 'About' %}">About</a>
+              </li>
+            </ul>
+
+            <!-- USER OPTIONS -->
+            <div class="user_option">
+              <div class="clock-container" id="clock-container">
+                <i class="fa fa-clock clock-icon"></i>
+                <span id="digital-clock">--:--:-- --</span>
+              </div>
+              <!-- Audio player, autoplay with hidden controls -->
+              <audio id="bg-music" src="{% static 'videos/coffeebgm.mp3' %}" autoplay loop></audio>
+
+              <!-- Volume control icon -->
+              <div id="audio-control" class="audio-control">
+                <i id="volume-icon" class="fa fa-volume-up"></i>
+                <div class="volume-slider-wrapper">
+                  <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5">
+                </div>
+              </div>
+              </a>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!-- end header section -->
+
+    {% block slider %}{% endblock slider %}
+  </div>
+
+  {% block main %}{% endblock main %}
+
+  <!-- footer section -->
+  <footer class="footer_section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 footer-col">
+          <div class="footer_contact">
+            <h4>
+              Contact Us
+            </h4>
+            <div class="contact_link_box">
+              <a href="">
+                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                <span>
+                  Location
+                </span>
+              </a>
+              <a href="">
+                <i class="fa fa-phone" aria-hidden="true"></i>
+                <span>
+                  Call +01 1234567890
+                </span>
+              </a>
+              <a href="">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <span>
+                  CozyBrew@gmail.com
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 footer-col">
+          <div class="footer_detail">
+            <a href="" class="footer-logo">
+              CozyBrew
+            </a>
+            <p>
+              CozyBrew isn't just a coffee shop — it's your daily escape. From handcrafted espresso to warm pastries, we
+              blend comfort and flavor to make every visit feel like home.
+            </p>
+            <div class="footer_social">
+              <a href="">
+                <i class="fa fa-facebook" aria-hidden="true"></i>
+              </a>
+              <a href="">
+                <i class="fa fa-twitter" aria-hidden="true"></i>
+              </a>
+              <a href="">
+                <i class="fa fa-linkedin" aria-hidden="true"></i>
+              </a>
+              <a href="">
+                <i class="fa fa-instagram" aria-hidden="true"></i>
+              </a>
+              <a href="">
+                <i class="fa fa-pinterest" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 footer-col">
+          <h4>
+            Opening Hours
+          </h4>
+          <p>
+            Everyday
+          </p>
+          <p>
+            10.00 Am -10.00 Pm
+          </p>
+        </div>
+      </div>
+      <div class="footer-info">
+        <p>
+          &copy; <span id="displayYear"></span> All Rights Reserved By
+          <a href="https://html.design/">Dreiissick</a><br><br>
+
+        </p>
+      </div>
+    </div>
+  </footer>
+  <!-- footer section -->
+
+  <!-- styles section -->
+  <style>
+    .clock-container {
+      position: fixed;
+      top: 20px;
+      right: 60px;
+      background-color: #222;
+      color: #fff;
+      font-family: monospace;
+      font-size: 16px;
+      padding: 8px 14px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+      z-index: 9999;
+    }
+
+    .clock-icon {
+      margin-right: 8px;
+      color: #f1c40f;
+    }
+
+     /* Music control styling */
+     .audio-control {
+      position: fixed;
+      top: 25px;
+      right: 15px;
+      z-index: 9999;
+      width: 30px;
+      height: 30px;
+      background: rgba(255, 255, 255, 0.24);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      overflow: visible;
+    }
+    
+    .audio-control.show-slider {
+      height: 140px; /* HEIGHT TO FIT SLIDER */
+      border-radius: 12px;
+      flex-direction: column;
+    }
+    
+    .audio-control i {
+      color: white;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    
+    .volume-slider-wrapper {
+      display: none;
+      position: absolute;
+      top: 60px; /* PUTS IT BELOW THE ICON */
+      right: 50%;
+      transform: translateX(50%) rotate(-90deg);
+      transform-origin: center;
+    }
+    
+    .audio-control.show-slider .volume-slider-wrapper {
+      display: block;
+    }
+    .audio-control.show-slider i {
+      opacity: 0;
+      pointer-events: none;
+    }
+    #volume-slider {
+      width: 100px;
+    }
+    
+  </style>
+
+  <script>
+    // CLOCK FUNCTION
+    function updateClock() {
+      const now = new Date();
+      let hours = now.getHours();
+      const minutes = now.getMinutes().toString().padStart(2, "0");
+      const seconds = now.getSeconds().toString().padStart(2, "0");
+      const ampm = hours >= 12 ? "PM" : "AM";
+  
+      hours = hours % 12 || 12;
+      hours = hours.toString().padStart(2, "0");
+  
+      document.getElementById("digital-clock").textContent = `${hours}:${minutes}:${seconds} ${ampm}`;
+      setTimeout(updateClock, 1000);
+    }
+  
+    // START CLOCK WHEN PAGE LOADS
+    window.addEventListener("load", () => {
+      updateClock();
+    });
+  
+    // MUSIC LOGIC
+    const audio = document.getElementById('bg-music');
+    const volumeSlider = document.getElementById('volume-slider');
+    const audioControl = document.getElementById('audio-control');
+    const volumeIcon = document.getElementById('volume-icon');
+  
+    audio.volume = volumeSlider.value;
+  
+    // VOLUME SLIDER FUNCTION
+    volumeSlider.addEventListener('input', () => {
+      audio.volume = volumeSlider.value;
+    });
+  
+    // TOGGLE SLIDER VISIBILITY
+    volumeIcon.addEventListener('click', (e) => {
+      e.stopPropagation();
+      audioControl.classList.toggle('show-slider');
+    });
+  
+    // HIDE SLIDER IF CLICKED OUTSIDE
+    document.addEventListener('click', (e) => {
+      if (!audioControl.contains(e.target)) {
+        audioControl.classList.remove('show-slider');
+      }
+    });
+  
+    // AUTOPLAY ON FIRST USER INTERACTION
+    document.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play().catch(err => {
+          console.warn("Autoplay blocked:", err);
+        });
+      }
+    }, { once: true });
+
+    // Save audio time before unload
+window.addEventListener('beforeunload', () => {
+  localStorage.setItem('musicTime', audio.currentTime);
+});
+
+// Restore audio time after load
+window.addEventListener('DOMContentLoaded', () => {
+  const savedTime = localStorage.getItem('musicTime');
+  if (savedTime) {
+    audio.currentTime = parseFloat(savedTime);
+  }
+});
+  </script>
+
+
+
+
+
+  <!-- jQery -->
+  <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+  <!-- popper js -->
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+  <!-- bootstrap js -->
+  <script src="{% static 'js/bootstrap.js' %} "></script>
+  <!-- owl slider -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+  </script>
+  <!-- isotope js -->
+  <script src="https://unpkg.com/isotope-layout@3.0.4/dist/isotope.pkgd.min.js"></script>
+  <!-- nice select -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script>
+  <!-- custom js -->
+  <script src="{% static 'js/custom.js' %} "></script>
+  <!-- Google Map -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
+  </script>
+  <!-- End Google Map -->
+
+</body>
+
+</html>
