@@ -30,10 +30,7 @@ urlpatterns = [
     path('download-receipt/<int:delivery_id>/', views.generate_receipt, name='download_receipt'),
     path('order/<int:order_id>/receipt/', views.generate_receipt, name='generate_receipt'),
 
-
-
 ]
-
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

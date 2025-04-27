@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Base_App',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -120,17 +121,30 @@ USE_TZ = True
 
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# Static files (CSS, JavaScript, Images)
+
 STATIC_URL = '/static/'
-
 STATICFILES_DIRS = [BASE_DIR / "static"]
-
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
 MEDIA_URL = '/media/'
-
 MEDIA_ROOT = BASE_DIR / 'media'
+
+if DEBUG:
+    # LOCAL SETTINGS
+    pass
+else:
+    # PRODUCTION SETTINGS
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+    AWS_ACCESS_KEY_ID = 'YOUR-AWS-ACCESS-KEY-ID'
+    AWS_SECRET_ACCESS_KEY = 'YOUR-AWS-SECRET-ACCESS-KEY'
+    AWS_STORAGE_BUCKET_NAME = 'YOUR-BUCKET-NAME'
+    AWS_S3_REGION_NAME = 'YOUR-REGION'  # example: 'ap-southeast-1'
+
+    AWS_QUERYSTRING_AUTH = False  # So files have public URLs
 
 
 # Default primary key field type
