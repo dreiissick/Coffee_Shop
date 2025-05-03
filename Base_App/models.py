@@ -27,23 +27,6 @@ class Items(models.Model):
 class AboutUs(models.Model):
     Description = models.TextField()
 
-# CLIENT PROFILE
-class Client(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    phone_number = models.CharField(max_length=15)
-    address = models.TextField()
-
-    def __str__(self):
-        return self.user.username
-
-# DELIVERY INFO
-from django.db import models
-from django.utils import timezone
-
-from django.db import models
-
-from django.db import models
-
 class Delivery(models.Model):
     name = models.CharField(max_length=255, default='Unknown')
     address = models.TextField(default='default address')

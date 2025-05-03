@@ -11,12 +11,18 @@
   <!-- Site Metas -->
   <meta name="keywords" content="" />
   <meta name="description" content="" />
-  <meta name="author" content="" />
+  <meta name="author" content="CozyBrew" />
   <link rel="shortcut icon" href="{% static 'images/favicon1.png' %}" type="">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
+<!-- Social Sharing (Open Graph) -->
+<meta property="og:title" content="CozyBrew Café | Coffee. Comfort. Click." />
+<meta property="og:description" content="Order your favorite brews and snacks online with ease. Sip, smile, and repeat at CozyBrew!" />
+<meta property="og:image" content="{% static 'images/og-image.jpg' %}" />
+<meta property="og:url" content="https://coffee-shop-lraq.onrender.com" />
+<meta property="og:type" content="website" />
 
-  <title> Drei </title>
+  <title> CozyBrew</title>
 
   <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
@@ -80,7 +86,7 @@
               <li class="nav-item {% block menu_status %}{% endblock menu_status %}">
                 <a class="nav-link" href="{% url 'Menu' %}">Menu</a>
               </li>
-              <li class="nav-item {% block feedback_status %}{% endblock feedback_status %}">
+              <li class="nav-item {% block cart_status %}{% endblock cart_status %}">
                 <a class="nav-link" href="{% url 'Cart' %}">Cart</a>
               </li>
               <li class="nav-item {% block about_status %}{% endblock about_status %}">

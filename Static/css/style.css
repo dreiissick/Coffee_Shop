@@ -160,7 +160,7 @@ a:focus {
 .navbar-brand span {
   font-weight: bold;
   font-size: 32px;
-  color: #ffffff;
+  color: #000000;
 }
 
 .custom_nav-container {
@@ -182,7 +182,7 @@ a:focus {
 }
 
 .custom_nav-container .navbar-nav .nav-item:hover .nav-link, .custom_nav-container .navbar-nav .nav-item.active .nav-link {
-  color: #ffbe33;
+  color: #000000;
 }
 
 .custom_nav-container .nav_search-btn {
@@ -195,7 +195,7 @@ a:focus {
 }
 
 .custom_nav-container .nav_search-btn:hover {
-  color: #926a2a;
+  color: #d7ae28;
 }
 
 .user_option {
@@ -216,7 +216,7 @@ a:focus {
 }
 
 .user_option .user_link:hover {
-  color: #ffbe33;
+  color: #bf9b4e;
 }
 
 .user_option .cart_link {
@@ -343,18 +343,20 @@ a:focus {
 }
 
 .slider_section .detail-box {
-  color: #ffffff;
+  color: #000000;
   margin-bottom: 145px;
 }
 
 .slider_section .detail-box h1 {
-  font-size: 3.5rem;
+  font-size: 5.2rem;
+  text-shadow: 0 0 5px #ffffff, 0 0 10px #9f7d02, 0 0 15px #ffffff;
   font-weight: bold;
   margin-bottom: 15px;
 }
 
 .slider_section .detail-box p {
   font-size: 14px;
+  text-shadow: 0 0 5px #ffffff, 0 0 10px #9f7d02, 0 0 15px #ffffff;
 }
 
 .slider_section .detail-box a {
@@ -389,7 +391,7 @@ a:focus {
 }
 
 .slider_section .carousel-indicators li {
-  background-color: #ffffff;
+  background-color: #FFF2CC;
   width: 12px;
   height: 12px;
   border-radius: 100%;
@@ -417,20 +419,20 @@ a:focus {
   margin-top: 45px;
   border-radius: 5px;
   padding: 20px 15px;
-  background-color: #e1aea2;
-  color: #ffffff;
+  background-color: #8b2b059d;
+  color: #fff8e5;
 }
 
 .offer_section .box .img-box {
   width: 175px;
-  min-width: 175px;
-  height: 175px;
+  min-width: 200px;
+  height: 200px;
   margin-right: 15px;
   position: relative;
   -webkit-transition: all 0.1 0.5s;
   transition: all 0.1 0.5s;
   border-radius: 100%;
-  border: 5px solid #9d7369;
+  border: 5px solid #9c856c;
   overflow: hidden;
 }
 
@@ -441,13 +443,13 @@ a:focus {
 }
 
 .offer_section .box .detail-box h5 {
-  font-family: 'Dancing Script', cursive;
+  font-family: 'Anton SC', cursive;
   font-size: 24px;
   margin: 0;
 }
 
 .offer_section .box .detail-box h6 {
-  font-family: 'Dancing Script', cursive;
+  font-family: 'Anton sc ', cursive;
   margin: 10px 0;
 }
 

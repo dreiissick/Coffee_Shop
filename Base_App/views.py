@@ -1,8 +1,5 @@
 from django.contrib import messages
 from django.http import HttpResponse
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
@@ -10,7 +7,7 @@ from io import BytesIO
 from decimal import Decimal, InvalidOperation
 from decimal import Decimal
 from django.shortcuts import render, redirect, get_object_or_404
-from Base_App.models import Client, AboutUs, ItemList, Items, Delivery, Cart, CartItem, Order
+from Base_App.models import AboutUs, ItemList, Items, Delivery, Cart, CartItem, Order
 
 # Create your views here.
 
@@ -19,74 +16,6 @@ def HomeView(request):
     list = ItemList.objects.all()  # Get all item lists
     return render(request, 'home.html', {'items': items, 'list': list})
 
-def signup(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()  # This saves the User instance
-            phone_number = request.POST.get('phone_number')
-            address = request.POST.get('address')
-
-           
-            Client.objects.create(
-                user=user,
-                phone_number=phone_number,
-                address=address
-            )
-
-            return redirect('login')  # After signup, go to login
-    else:
-        form = UserCreationForm()
-    
-    return render(request, 'signup.html', {'form': form})
-
-# Login view
-def login_view(request):
-    if request.method == 'POST':
-        email = request.POST['email']
-        password = request.POST['password']
-        user = authenticate(request, username=email, password=password)
-
-        if user is not None:
-            login(request, user)
-            return redirect('home')  # Redirect to home after login
-        else:
-            return render(request, 'login.html', {'error': 'Invalid credentials'})
-    return render(request, 'login.html')
-
-# Cart view
-@login_required
-def CartView(request):
-    cart = request.session.get('cart', [])  # Retrieve cart from session
-
-    phone_number = ''
-    address = ''
-
-    try:
-        client = Client.objects.get(user=request.user)
-        phone_number = client.phone_number
-        address = client.address
-    except Client.DoesNotExist:
-        pass
-
-    # Calculate total price in the view before sending it to the template
-    cart_items = []
-    cart_total = 0
-
-    for cart_item in cart:
-        item = cart_item['item']  # Assuming cart_item contains the item object
-        total_price = item.Price * cart_item['quantity']
-        cart_items.append({**cart_item, 'total_price': total_price})  # Add total_price to the cart item
-        cart_total += total_price
-
-    context = {
-        'cart_items': cart_items,
-        'cart_total': cart_total,
-        'phone_number': phone_number,
-        'delivery_address': address,
-    }
-
-    return render(request, 'cart.html', context)
 
 # Submit order
 def submit_order(request):
